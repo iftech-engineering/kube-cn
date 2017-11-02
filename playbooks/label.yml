@@ -1,0 +1,38 @@
+---
+- hosts: k8s-cluster
+  gather_facts: no
+  tasks:
+    - set_fact:
+        ansible_python_interpreter: "/opt/bin/python"
+      when: bootstrap_os == "coreos"
+    - name: gather facts
+      setup:
+    - name: label node with role
+      when: node_role is defined
+      kube:
+        name: "{{ ansible_hostname }}"
+        kubectl: "{{bin_dir}}/kubectl"
+        resource: node
+        label: role={{ node_role }}
+        state: labeled
+      delegate_to: "{{ groups['kube-master'][0] }}"
+
+    - name: label node with instance_type
+      when: instance_type is defined
+      kube:
+        name: "{{ ansible_hostname }}"
+        kubectl: "{{bin_dir}}/kubectl"
+        resource: node
+        label: beta.kubernetes.io/instance-type={{ instance_type }}
+        state: labeled
+      delegate_to: "{{ groups['kube-master'][0] }}"
+
+    - name: label node with availability_zone
+      when: availability_zone is defined
+      kube:
+        name: "{{ ansible_hostname }}"
+        kubectl: "{{bin_dir}}/kubectl"
+        resource: node
+        label: failure-domain.beta.kubernetes.io/zone={{ availability_zone }}
+        state: labeled
+      delegate_to: "{{ groups['kube-master'][0] }}"
