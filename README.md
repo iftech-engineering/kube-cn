@@ -1,6 +1,8 @@
 # boot-cn
-easy kubernetes deployment / management with ansible in GFW
-Now supports kubernetes 1.8.2
+easy kubernetes deployment / management with ansible in GFW.
+
+## Supported kubernetes version
+Now only Kubernetes 1.8.2 is tested.
 
 ## Submodules
 * forked version of kubespray (https://github.com/januszry/kubespray.git)
