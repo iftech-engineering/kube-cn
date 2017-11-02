@@ -4,20 +4,25 @@ Script as dynamic inventory for ansible / ansible-playbook.
 
 Example usage: ansible -i inv-ec2.py <group> -u <user> -b -a uptime
 
-To deploy k8s cluster, you need following instances:
-    * 2 kube-master
-    * 3 etcd
-    * at least 1 kube-nodes
-These nodes must be tagged with [
+Instances must be tagged with [
     {
         'Name': 'ansible-app',
         'Value': 'ansible-k8s',
     },
     {
         'Name': 'k8s-group',
-        'Value': group_name,
+        'Value': <group_name>,
+    },
+    {
+        'Name': 'k8s-env',
+        'Value': <env>,
     },
 ]
+
+To deploy production grade k8s cluster, you need at least following instances:
+    * 2 kube-master
+    * 3 etcd
+    * at least 1 kube-nodes
 """
 
 import argparse
