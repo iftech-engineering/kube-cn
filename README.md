@@ -54,3 +54,6 @@ Now supports kubernetes 1.8.2
     * `kubectl get nodes --show-labels` (now nodes have more labels)
 1. To mark nodes as deployed:
     * `tools/aws.py tag <list of nodes separated by blank or comma>`
+
+## TODO
+* ELB may not get ready immediately after apiserver is up, thus the boot may fail in the middle. Wait until it is ready and try again will solve the problem.
