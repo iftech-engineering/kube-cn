@@ -7,8 +7,8 @@ Now supports kubernetes 1.8.2
 
 ## System requirements:
 * Now only AWS is supported
-* Machine to run ansible: any system with python2
-* Kubernetes machines: CentOS 7 with kernel >= 4.12
+* Tested OS and kernel: CentOS 7 with kernel >= 4.12
+* See requirements.txt
 
 ## CAUTION for AMI for kubernetes machines
 * If you don't want to use proxy, don't set `http_proxy, https_proxy or no_proxy` to empty string. Comment them out or you'll get a wrong configuration file in /etc/systemd/system/docker.service.d;
@@ -24,9 +24,10 @@ Now supports kubernetes 1.8.2
     * node machines: anytype, at least one, tagged with `k8s-group=kube-node,k8s-node-role=<role>`
 1. Tag above machines with: `ansible-app=ansible-k8s,k8s-env=<env>`
 1. (Optional) Tag node machines with: `k8s-node-role=<role>`, which will make the nodes be labeled with `role=<role>`
+1. Add apiserver (master instances) behind a loadbalancer
 1. Modify vars in `ans/inventory/group_vars/all.yml` (Optional, you can also set them as extra vars in the next 2 steps)
-    * `apiserver_loadbalancer_domain_name`
-    * `loadbalancer_apiserver.address`
+    * `apiserver_loadbalancer_domain_name`: address of the loadbalancer for apiserver
+    * `loadbalancer_apiserver.address`: same as above
     * `loadbalancer_apiserver.port`
     * `bootstrap_os`
 1. Deploy: `ansible-playbook -i inventory/inv-ec2.py -u <username> -b kubespray/cluster.yml`
