@@ -1,4 +1,4 @@
-# boot-cn
+# kube-cn
 easy kubernetes deployment / management with ansible in GFW.
 
 ## Supported kubernetes version
